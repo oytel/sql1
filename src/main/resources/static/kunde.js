@@ -1,10 +1,17 @@
+$(function (){
+  hentAlle();
+});
+
 function regKunde() {
     const kunde = {
         navn : $("#navn").val(),
         adresse : $("#adresse").val()
     }
-    $.get("/lagre",kunde,function(retur){
+    $.get("/lagre",kunde,function(){
         hentAlle();
+    }) .fail(function (jqXHR){
+        const json = $.parseJSON(jqXHR.responseText);
+        $("#feil").html(json.message);
     });
     $("#navn").val(""); //tøm input-feltene
     $("#adresse").val("");
